@@ -1,6 +1,6 @@
 const App = () => {
   return (
-    <div>Quote Generator</div>
+    <h1 className="text-red-700 font-bold m-5 text-3xl">Quote Generator</h1>
   )
 }
 
