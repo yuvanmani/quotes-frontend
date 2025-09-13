@@ -1,9 +1,57 @@
 import { createBrowserRouter, RouterProvider } from "react-router"
+import Layout from "./wrappers/Layout"
+import Home from "./pages/Home"
+import Register from "./pages/Register"
+import Verify from "./pages/Verify"
+import Login from "./pages/Login"
+import { Provider } from "react-redux"
+import store from "./redux/app/store"
+import Dashboard from "./wrappers/Dashboard"
+import AllQuotes from "./components/AllQuotes"
+import Favorites from "./components/Favourites"
+import Logout from "./components/Logout"
 
 const routes = [{
   path: "/",
-  element: <h1 className="text-red-700 font-bold m-5 text-3xl">Quote Generator</h1>
-}]
+  element: <Layout />,
+  children: [
+    {
+      index: true,
+      element: <Home />
+    },
+    {
+      path: "register",
+      element: <Register />
+    },
+    {
+      path: "verify",
+      element: <Verify />
+    },
+    {
+      path: "login",
+      element: <Login />
+    }
+  ]
+},
+{
+  path: "/dashboard",
+  element: <Dashboard />,
+  children: [
+    {
+      index: true,
+      element: <AllQuotes />
+    },
+    {
+      path: "favorites",
+      element: <Favorites />
+    },
+    {
+      path: "logout",
+      element: <Logout />
+    }
+  ]
+}
+]
 
 const router = createBrowserRouter(routes, {
   future: {
@@ -17,12 +65,15 @@ const router = createBrowserRouter(routes, {
 
 const App = () => {
   return (
-    <RouterProvider
-      router={router}
-      future={{
-        v7_startTransition: true,
-      }}
-    />
+    <Provider store={store}>
+      <RouterProvider
+        router={router}
+        future={{
+          v7_startTransition: true,
+        }}
+      />
+    </Provider>
+
   )
 }
 
