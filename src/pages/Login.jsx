@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { selectEmail, selectPassword, setEmail, setPassword } from "../redux/features/auth/loginSlice"
 import { useState } from "react";
+import { toast } from "react-toastify";
+import authServices from "../services/authServices"
 
 const LoginPage = () => {
 
@@ -19,6 +21,22 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // handle login logic here
+    authServices.login({ email, password })
+      .then((response) => {
+        toast.success(response.data.message);
+
+        // clear the form
+        dispatch(setEmail(""));
+        dispatch(setPassword(""));
+
+        // navigate the user to dashboard
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
   }
 
   return (

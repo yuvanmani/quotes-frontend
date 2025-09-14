@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router"
 import { selectEmail, selectName, selectPassword, setEmail, setName, setPassword } from "../redux/features/auth/registerSlice"
 import { useState } from "react";
+import authServices from "../services/authServices"
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
 
@@ -20,6 +22,24 @@ const RegisterPage = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+
+    // handle register logic here
+    authServices.register({ name, email, password })
+      .then((response) => {
+        toast.success(response.data.message)
+
+        // clear the form
+        dispatch(setName(""));
+        dispatch(setEmail(""));
+        dispatch(setPassword(""));
+
+        // navigate to verify page
+        navigate("/verify");
+
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
 
   }
 

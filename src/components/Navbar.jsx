@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router";
+import "./Navbar.css"
 
 const getNavigation = (user) => {
   if (!user) {
@@ -11,7 +12,7 @@ const getNavigation = (user) => {
   } else if (user) {
     return [
       { name: "Dashboard", href: "/dashboard" },
-      { name: "Favorites", href: "/dashboard/create" },
+      { name: "Favorites", href: "/dashboard/favorites" },
       { name: "Logout", href: "/dashboard/logout" }
     ]
   }
@@ -34,7 +35,7 @@ const NavBar = ({ user }) => {
       <div>
         <nav className="bg-gradient-to-bl from-purple-100 to-green-200 text-gray-700 shadow-md fixed top-0 left-0 w-full z-50">
           <div className="container mx-auto px-6 py-4 flex xl:justify-evenly justify-around items-center">
-            <p className="text-2xl md:text-2xl font-bold hover:text-red-400">QuoteCraft</p>
+            <p id="text" className="text-2xl md:text-3xl hover:text-red-400">QuoteCraft</p>
             <ul className="hidden md:flex space-x-6">
               {
                 getNavigation(user).map((item) => (

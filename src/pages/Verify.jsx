@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectEmail, selectOtp, setEmail, setOtp } from "../redux/features/auth/verifySlice"
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import authServices from "../services/authServices"
+import { toast } from "react-toastify";
 
 const VerifyPage = () => {
 
@@ -19,6 +21,22 @@ const VerifyPage = () => {
 
     const handleVerify = (e) => {
         e.preventDefault();
+
+        // handle verify logic here
+        authServices.verify({ email, otp })
+            .then((response) => {
+                toast.success(response.data.message);
+
+                // clear the form
+                dispatch(setEmail(""));
+                dispatch(setOtp(""));
+
+                // navigate to login page
+                navigate("/login");
+            })
+            .catch((error) => {
+                toast.error(error.response.data.message);
+            })
     }
 
     return (
